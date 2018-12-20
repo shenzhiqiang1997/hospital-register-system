@@ -8,6 +8,7 @@ import priv.shen.hospitalregistersystem.dto.*;
 import priv.shen.hospitalregistersystem.service.UserService;
 import priv.shen.hospitalregistersystem.vo.LoginVO;
 import priv.shen.hospitalregistersystem.vo.Result;
+import priv.shen.hospitalregistersystem.vo.UserInfoVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -67,4 +68,9 @@ public class UserController {
         return userService.updatePassword(passwordDto,session);
     }
 
+    @ApiOperation("查看个人信息")
+    @GetMapping("/userInfo")
+    public Result<UserInfoVO> getUserInfo(HttpSession session) throws Exception{
+        return userService.getUserInfo(session);
+    }
 }

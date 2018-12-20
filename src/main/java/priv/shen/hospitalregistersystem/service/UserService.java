@@ -14,6 +14,7 @@ import priv.shen.hospitalregistersystem.repository.UserRepository;
 import priv.shen.hospitalregistersystem.util.SendCode;
 import priv.shen.hospitalregistersystem.vo.LoginVO;
 import priv.shen.hospitalregistersystem.vo.Result;
+import priv.shen.hospitalregistersystem.vo.UserInfoVO;
 
 import javax.servlet.http.HttpSession;
 import java.util.concurrent.TimeUnit;
@@ -130,5 +131,17 @@ public class UserService {
             throw new GlobalException(Message.NOT_LOGIN.content);
         session.invalidate();
         return new Result(true);
+    }
+
+    public Result<UserInfoVO> getUserInfo(HttpSession session) throws Exception{
+        String telNum = (String) session.getAttribute(Key.TEL_NUM.value);
+        User user = userRepository.getOne(telNum);
+
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setName(user.getName());
+        userInfoVO.setSex(user.getSex());
+        userInfoVO.setIdNum(user.getIdNum());
+        userInfoVO.setTelNum(user.getTelNum());
+        return new Result<>(true,userInfoVO);
     }
 }
